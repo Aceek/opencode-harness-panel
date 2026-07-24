@@ -51,6 +51,35 @@ opencode
 To test the compiled entrypoint instead, change the local plugin spec to `./dist/index.js` after running
 `bun run build`.
 
+## Install from npm
+
+After publication, add the package to your user or project `tui.jsonc`. OpenCode installs npm TUI plugins on startup.
+
+```jsonc
+{
+  "$schema": "https://opencode.ai/tui.json",
+  "plugin": [
+    [
+      "opencode-harness-panel",
+      {
+        "preset": "balanced",
+      },
+    ],
+  ],
+}
+```
+
+Quit and restart OpenCode after changing `tui.jsonc`. The package supports OpenCode `>=1.18.4 <2`.
+
+To validate a release candidate before publishing, run:
+
+```bash
+bun run test:consumer
+```
+
+This packs the project, installs the tarball into an isolated temporary consumer, and imports its public
+`opencode-harness-panel/tui` entrypoint.
+
 ## Configuration
 
 TUI plugin options are supplied in the tuple form supported by `tui.json`:

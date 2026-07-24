@@ -33,6 +33,7 @@
     "format:check": "prettier --check src test scripts README.md package.json",
     "check": "bun run format:check && bun run typecheck && bun run build && bun test",
     "pack:dry-run": "npm pack --dry-run",
+    "test:consumer": "bun run build && bun scripts/test-consumer.ts",
     "prepack": "bun run check"
   },
   "peerDependencies": {
