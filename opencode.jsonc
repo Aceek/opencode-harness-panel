@@ -1,0 +1,11 @@
+{
+  "$schema": "https://opencode.ai/config.json",
+  "instructions": ["AGENTS.md"],
+  "references": {
+    "opencode-upstream": {
+      "repository": "anomalyco/opencode",
+      "branch": "dev",
+      "description": "Use for current OpenCode TUI plugin APIs, slot contracts, and implementation conventions"
+    }
+  }
+}
