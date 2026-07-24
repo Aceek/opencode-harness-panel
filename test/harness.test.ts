@@ -1,6 +1,13 @@
 import { describe, expect, test } from "bun:test"
 import type { Message, Part, Session } from "@opencode-ai/sdk/v2"
-import { buildHarnessSections, groupHarnessItems, type HarnessInput } from "../src/harness"
+import {
+  buildHarnessSections,
+  buildSessionSummary,
+  buildToolActivity,
+  groupHarnessItems,
+  sessionSummaryLabel,
+  type HarnessInput,
+} from "../src/harness"
 
 const session: Session = {
   id: "session-1",
@@ -218,6 +225,19 @@ describe("harness projections", () => {
     expect(groups.map((group) => group.title)).toEqual(["Used this session", "Available now"])
     expect(groups[0]?.items.map((item) => item.label)).toEqual(["typescript"])
     expect(groups[1]?.items.map((item) => item.label)).toEqual(["security"])
+  })
+
+  test("summarizes use and aggregates tool calls without rendering inputs or outputs", () => {
+    const activity = buildToolActivity([skillPart, executePart, taskPart])
+    const summary = buildSessionSummary([skillPart, executePart, taskPart])
+
+    expect(activity).toEqual([
+      expect.objectContaining({ label: "execute", detail: "1 call" }),
+      expect.objectContaining({ label: "skill", detail: "1 call" }),
+      expect.objectContaining({ label: "task", detail: "1 call" }),
+    ])
+    expect(summary).toEqual({ skills: 1, subagents: 1, toolCalls: 3 })
+    expect(sessionSummaryLabel(summary)).toBe("1 skill · 1 subagent · 3 tool calls total")
   })
 
   test("reads only the public skill name field", () => {

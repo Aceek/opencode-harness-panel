@@ -37,6 +37,12 @@ export type HarnessItemGroup = {
   items: HarnessItem[]
 }
 
+export type SessionSummary = {
+  skills: number
+  subagents: number
+  toolCalls: number
+}
+
 export function groupHarnessItems(items: HarnessItem[]): HarnessItemGroup[] {
   const used = items.filter((item) => item.state === "used")
   const available = items.filter((item) => item.state === "available")
@@ -83,6 +89,27 @@ function unique(values: readonly string[]): string[] {
 
 function latestMessage(messages: readonly Message[]) {
   return messages.at(-1)
+}
+
+function plural(count: number, singular: string): string {
+  return `${count} ${singular}${count === 1 ? "" : "s"}`
+}
+
+export function buildSessionSummary(parts: readonly Part[]): SessionSummary {
+  return {
+    skills: observedSkills(parts).names.length,
+    subagents: observedSubagents(parts).length,
+    toolCalls: parts.filter((part) => part.type === "tool").length,
+  }
+}
+
+export function sessionSummaryLabel(summary: SessionSummary): string {
+  if (!summary.skills && !summary.subagents && !summary.toolCalls) return "No activity yet"
+  return [
+    plural(summary.skills, "skill"),
+    plural(summary.subagents, "subagent"),
+    `${plural(summary.toolCalls, "tool call")} total`,
+  ].join(" · ")
 }
 
 function runtime(input: HarnessInput): HarnessSection {
@@ -266,6 +293,41 @@ function subagents(input: HarnessInput): HarnessSection {
   }
 }
 
+type ToolActivity = {
+  name: string
+  calls: number
+}
+
+export function buildToolActivity(parts: readonly Part[]): HarnessItem[] {
+  const grouped = new Map<string, ToolActivity>()
+  for (const part of parts) {
+    if (part.type !== "tool") continue
+    const activity = grouped.get(part.tool) ?? {
+      name: part.tool,
+      calls: 0,
+    }
+    activity.calls++
+    grouped.set(part.tool, activity)
+  }
+  return [...grouped.values()]
+    .sort((left, right) => right.calls - left.calls || left.name.localeCompare(right.name))
+    .map((activity) => ({
+      label: safeLabel(activity.name),
+      detail: plural(activity.calls, "call"),
+      scope: "session",
+      confidence: "authoritative",
+    }))
+}
+
+function tools(input: HarnessInput): HarnessSection {
+  return {
+    id: "tools",
+    title: "Tool activity",
+    items: buildToolActivity(input.parts),
+    empty: "No tool calls yet",
+  }
+}
+
 function agentOrigin(
   name: string,
   agent: Catalog["agents"][number] | undefined,
@@ -349,6 +411,7 @@ export function buildHarnessSections(input: HarnessInput): HarnessSection[] {
     runtime(input),
     skills(input),
     subagents(input),
+    tools(input),
     plugins(input),
     hooks(input),
     integrations(input),

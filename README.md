@@ -11,6 +11,7 @@ public TUI plugin API.
 ## Features
 
 - A focused default view of available skills and available or observed subagents
+- A concise session summary and optional safe per-tool activity counts
 - Clear `Used this session` and `Available now` groups with visual status markers
 - Proven conventional-file contributions for agents, with unknown provenance kept explicit
 - Collapsible sections using the same mouse interaction as OpenCode's built-in sidebar
@@ -96,7 +97,7 @@ Invalid values fall back to safe defaults and never prevent the plugin from load
 Per-section booleans override the selected preset. Supported section keys are:
 
 ```text
-runtime, skills, subagents, plugins, hooks, integrations, agents, commands,
+runtime, skills, subagents, tools, plugins, hooks, integrations, agents, commands,
 references, permissions, mcp, lsp, files, todos
 ```
 
@@ -108,6 +109,9 @@ Click a section title to collapse or expand it. This view state is local and res
 
 The plugin never renders tool inputs, tool outputs, prompt text, todo content, OAuth tokens, environment values, or raw
 errors. Common token formats are redacted from labels as an additional safeguard.
+
+Tool activity is disabled by default. Enable `sections.tools` to aggregate persisted tool parts by tool name and render
+only call counts; it never reads tool arguments, titles, metadata, outputs, or error bodies.
 
 Agent provenance collection recursively reads directory-entry names and types only. It never reads agent file contents,
 prompts, or configuration files, and discovered paths are neither retained in the projection nor rendered.

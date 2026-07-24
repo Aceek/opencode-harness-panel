@@ -2,7 +2,14 @@ import type { TuiPluginApi } from "@opencode-ai/plugin/tui"
 import { createMemo, createResource, createSignal, For, Show } from "solid-js"
 import { collectAgentFileEvidence } from "./agent-files"
 import type { HarnessConfig, SectionName } from "./config"
-import { buildHarnessSections, groupHarnessItems, type Catalog, type HarnessSection } from "./harness"
+import {
+  buildHarnessSections,
+  buildSessionSummary,
+  groupHarnessItems,
+  sessionSummaryLabel,
+  type Catalog,
+  type HarnessSection,
+} from "./harness"
 
 function environmentFlag(name: string): boolean {
   const value = process.env[name]?.toLowerCase()
@@ -134,12 +141,17 @@ export function HarnessPanel(props: { api: TuiPluginApi; sessionID: string; conf
       pathPolicy: props.config.privacy.paths,
     }).filter((section) => props.config.sections[section.id as SectionName])
   })
+  const summary = createMemo(() => {
+    const messages = props.api.state.session.messages(props.sessionID)
+    return sessionSummaryLabel(buildSessionSummary(messages.flatMap((message) => props.api.state.part(message.id))))
+  })
 
   return (
     <box>
       <text fg={theme().text}>
         <b>Harness</b>
       </text>
+      <text fg={theme().textMuted}>{summary()}</text>
       <For each={sections()}>
         {(section) => (
           <HarnessSectionView

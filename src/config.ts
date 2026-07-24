@@ -2,6 +2,7 @@ export const sectionNames = [
   "runtime",
   "skills",
   "subagents",
+  "tools",
   "plugins",
   "hooks",
   "integrations",

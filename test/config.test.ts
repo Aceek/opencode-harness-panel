@@ -10,6 +10,7 @@ describe("configuration", () => {
     expect(config.sections.runtime).toBeFalse()
     expect(config.sections.skills).toBeTrue()
     expect(config.sections.subagents).toBeTrue()
+    expect(config.sections.tools).toBeFalse()
     expect(config.sections.hooks).toBeFalse()
     expect(config.sections.plugins).toBeFalse()
     expect(config.sections.integrations).toBeFalse()
