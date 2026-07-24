@@ -5,6 +5,9 @@
   "description": "Configurable OpenCode TUI sidebar for inspecting session and harness state.",
   "type": "module",
   "license": "MIT",
+  "publishConfig": {
+    "access": "public"
+  },
   "author": "Aceek",
   "repository": {
     "type": "git",
@@ -30,11 +33,12 @@
     "build": "bun scripts/build.ts",
     "typecheck": "tsc --noEmit",
     "test": "bun test",
-    "format": "prettier --write src test scripts README.md CHANGELOG.md package.json",
-    "format:check": "prettier --check src test scripts README.md CHANGELOG.md package.json",
+    "format": "prettier --write src test scripts .github README.md CHANGELOG.md RELEASING.md package.json",
+    "format:check": "prettier --check src test scripts .github README.md CHANGELOG.md RELEASING.md package.json",
     "check": "bun run format:check && bun run typecheck && bun run build && bun test",
     "pack:dry-run": "npm pack --dry-run",
     "test:consumer": "bun run build && bun scripts/test-consumer.ts",
+    "verify:release": "bun scripts/verify-release.ts",
     "prepack": "bun run check"
   },
   "peerDependencies": {

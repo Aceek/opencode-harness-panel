@@ -52,7 +52,7 @@ To test the compiled entrypoint instead, change the local plugin spec to `./dist
 
 ## Install from npm
 
-After publication, add the package to your user or project `tui.jsonc`. OpenCode installs npm TUI plugins on startup.
+Add the package to your user or project `tui.jsonc`. OpenCode installs npm TUI plugins on startup.
 
 ```jsonc
 {
@@ -78,6 +78,9 @@ bun run test:consumer
 
 This packs the project, installs the tarball into an isolated temporary consumer, and imports its public
 `opencode-harness-panel/tui` entrypoint.
+
+Maintainers should follow [RELEASING.md](RELEASING.md) for versioning, npm publication, and trusted GitHub Actions
+publishing.
 
 ## Configuration
 
@@ -183,7 +186,7 @@ bun run build
 bun run pack:dry-run
 ```
 
-The npm package exposes only `./tui`, as expected by the OpenCode TUI plugin loader. Publication is intentionally deferred.
+The npm package exposes only `./tui`, as expected by the OpenCode TUI plugin loader.
 
 ## License
 
