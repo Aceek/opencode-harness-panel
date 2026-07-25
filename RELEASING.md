@@ -24,6 +24,19 @@ provenance for a public package published through this trusted workflow. Every a
 Dependabot proposes controlled updates for those pins. The workflow also installs an explicit npm CLI version satisfying
 Trusted Publishing's minimum requirement before publishing.
 
+## Trusted publishing status
+
+Trusted Publishing was validated on 2026-07-25 by publishing `0.1.1` through
+the protected GitHub Actions environment. Verify a published release with:
+
+```bash
+npm view opencode-harness-panel@X.Y.Z dist.attestations --json
+npm audit signatures
+```
+
+Do not move or recreate an existing release tag. Publish a new semantic version
+for every release.
+
 ## Release procedure
 
 1. Start from an up-to-date `main` with a clean worktree.

@@ -1,4 +1,10 @@
 node_modules/
 dist/
+coverage/
+*.tgz
 *.log
+.npmrc
+.env
+.env.*
+!.env.example
 .DS_Store

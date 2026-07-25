@@ -30,6 +30,15 @@ and session introspection to the right sidebar without modifying OpenCode core.
 - Add tests for configuration resolution and every non-trivial data projection.
 - Run `bun run check` before considering a change complete.
 
+## Releases
+
+- Read `RELEASING.md` before changing a package version, creating a release tag,
+  or publishing to npm.
+- Prefer the GitHub Actions Trusted Publishing workflow; never add npm tokens or
+  other credentials to the repository, workflow secrets, logs, or documentation.
+- A release tag must exactly equal `v` followed by the package version.
+- Run the documented release checks before pushing a release tag.
+
 ## Documentation
 
 - Keep configuration examples in `README.md` synchronized with runtime defaults.
