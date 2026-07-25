@@ -2,6 +2,15 @@
 
 All notable changes to this project are documented in this file.
 
+## 0.1.1 - 2026-07-25
+
+### Changed
+
+- Added trusted npm publishing through GitHub Actions OIDC for future tagged releases.
+- Added a maintained release procedure, tag/version verification, and explicit public-package configuration.
+- Hardened CI and publishing workflows with minimum permissions and immutable action pins.
+- Pinned npm CLI `11.18.0` in the publishing workflow to satisfy Trusted Publishing requirements.
+
 ## 0.1.0 - 2026-07-24
 
 Initial public release.

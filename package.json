@@ -1,7 +1,7 @@
 {
   "$schema": "https://json.schemastore.org/package.json",
   "name": "opencode-harness-panel",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "Configurable OpenCode TUI sidebar for inspecting session and harness state.",
   "type": "module",
   "license": "MIT",

@@ -5,7 +5,7 @@ one sidebar block.
 
 ## Status
 
-Version 0.1.0 is the first public release. It supports OpenCode `>=1.18.4 <2` and uses only the public TUI plugin API.
+Version 0.1.1 is the current public release. It supports OpenCode `>=1.18.4 <2` and uses only the public TUI plugin API.
 
 ## Features
 

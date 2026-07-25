@@ -21,7 +21,8 @@ Configure the following before publishing a future version from GitHub Actions:
 The workflow `.github/workflows/publish.yml` requests only `contents: read` and `id-token: write`. It contains no npm
 token: npm exchanges the GitHub Actions OIDC identity for short-lived publish credentials. npm automatically generates
 provenance for a public package published through this trusted workflow. Every action is pinned to an immutable commit;
-Dependabot proposes controlled updates for those pins.
+Dependabot proposes controlled updates for those pins. The workflow also installs an explicit npm CLI version satisfying
+Trusted Publishing's minimum requirement before publishing.
 
 ## Release procedure
 
